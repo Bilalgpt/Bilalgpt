@@ -1,0 +1,40 @@
+model:
+  architecture: unet          # unet, fpn, deeplabv3+
+  encoder: resnet34
+  encoder_weights: imagenet
+  in_channels: 3
+  num_classes: 6
+
+classes:
+  0: background
+  1: road
+  2: sidewalk
+  3: lane_marking
+  4: curb
+  5: crosswalk
+
+training:
+  epochs: 50
+  batch_size: 8
+  lr: 0.0003
+  lr_scheduler: cosine
+  weight_decay: 0.0001
+  img_height: 384
+  img_width: 768
+  val_split: 0.15
+  early_stopping_patience: 8
+
+augmentation:
+  horizontal_flip: true
+  random_brightness_contrast: true
+  random_crop: true
+  coarse_dropout: false
+
+paths:
+  data_dir: ./data
+  output_dir: ./runs
+  weights_dir: ./weights
+
+inference:
+  confidence_threshold: 0.5
+  output_blend_alpha: 0.5
